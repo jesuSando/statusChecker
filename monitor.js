@@ -2,23 +2,49 @@ import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const SERVER_URL = `${process.env.SERVER_URL}/health`;
+const SERVER_URL1 = `${process.env.SERVER_URL1}/server1`;
 
-async function checkHealth() {
+async function checkHealth1() {
   try {
-    const res = await fetch(SERVER_URL);
+    const res = await fetch(SERVER_URL1);
     const data = await res.json();
 
     if (data.status) {
-        console.log(JSON.stringify({ status: 1 }));
+        console.log("server-1")
+        console.log(JSON.stringify({ status: true }));
     } else {
-        console.log(JSON.stringify({ status: 0 }));
+        console.log("server-1")
+        console.log(JSON.stringify({ status: false }));
     }
   } catch (error) {
-    console.error(JSON.stringify({ status: 0 }));
-    console.log("no hay respuesta del server");
+    console.log("server-1")
+    console.error(JSON.stringify({ status: false }));
   }
 }
-setInterval(checkHealth, 3000); 
 
-checkHealth(); // Initial check
+
+const SERVER_URL2 = `${process.env.SERVER_URL2}/server2`;
+
+async function checkHealth2() {
+  try {
+    const res = await fetch(SERVER_URL2);
+    const data = await res.json();
+
+    if (data.status) {
+        console.log("server-2")
+        console.log(JSON.stringify({ status: true }));
+    } else {
+        console.log("server-2")
+        console.log(JSON.stringify({ status: false }));
+    }
+  } catch (error) {
+    console.log("server-2")
+    console.error(JSON.stringify({ status: false }));
+  }
+}
+
+setInterval(checkHealth1, 10000); 
+checkHealth1(); // server 1 
+
+setInterval(checkHealth2, 10000); 
+checkHealth2(); // server 2
